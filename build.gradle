@@ -1,0 +1,27 @@
+group = 'com.hska.eshop'
+version = '0.0.1-SNAPSHOT'
+
+subprojects {
+    apply plugin: "java"
+    group = 'com.hska.eshop'
+    version = '1.0.0-SNAPSHOT'
+    sourceCompatibility = '17'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // Basic
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        // Database
+        implementation 'org.postgresql:postgresql:42.6.0'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.data:spring-data-jpa:3.0.5'
+        implementation 'org.springframework.data:spring-data-jdbc:3.0.5'
+        implementation 'org.flywaydb:flyway-core:9.16.3'
+        // Testing
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    test {
+        useJUnitPlatform()
+    }
+}

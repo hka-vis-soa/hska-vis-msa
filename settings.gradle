@@ -1,0 +1,7 @@
+rootProject.name = 'hska-vis-msa'
+/*
+ Include here to add more microservices.
+ To do this, create a new directory in the root project "hska-vis-msa".
+ After that, include the name of the directory here and load the gradle changes
+ */
+include 'user-service'

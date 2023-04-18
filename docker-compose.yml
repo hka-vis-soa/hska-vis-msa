@@ -1,0 +1,35 @@
+version: '1.0'
+services:
+  #postgresql database
+  postgres:
+    image: postgres
+    container_name: postgresdb
+    restart: on-failure
+    ports:
+      - "5432:5433"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=eshopdb
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@eshop.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - postgres
+  #user-service microservice
+  user-service:
+    build: ./user-service
+    ports:
+      - "8000:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgresdata: {}
