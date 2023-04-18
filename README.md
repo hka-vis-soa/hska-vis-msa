@@ -7,6 +7,7 @@
 ## Required Installation
 
 ---
+
 - Java 17 or higher
 - Gradle
 - Docker
@@ -21,6 +22,7 @@
 ## Getting Started
 
 ---
+
 In every Microservice's application.properties file the spring profile has to be selected to run locally or via docker container.
 
 The following steps are required for a deployment via docker containers.
@@ -42,6 +44,7 @@ To stop the application simply write `docker-compose` down
 ## Useful tools
 
 ---
+
 **pgadmin4**: Admin Interface for PostgreSQL database. 
 
 Can be found here http://localhost:5050/. 
