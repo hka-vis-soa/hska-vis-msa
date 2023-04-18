@@ -2,26 +2,18 @@
 ## Summer semester 2023
 ## Overview
 
----
-
 ## Required Installation
-
----
 
 - Java 17 or higher
 - Gradle
 - Docker
 - Docker-compose
-- 
-## Microservices
 
----
+## Microservices
 
 [TODO]
 
 ## Getting Started
-
----
 
 In every Microservice's application.properties file the spring profile has to be selected to run locally or via docker container.
 
@@ -43,12 +35,8 @@ To stop the application simply write `docker-compose` down
 
 ## Useful tools
 
----
-
 **pgadmin4**: Admin Interface for PostgreSQL database. 
 
 Can be found here http://localhost:5050/. 
 
-To access the admin view of the database, login with **admin@eshop.de** and **admin**. After that click **Add new server**. Enter a name and switch to the **connection** tab. There you need to check the IP address of the postgres container with the command `docker inspect postgresdb`, at the end of the command output you will find the **IPAddress**. Enter the username **root** and password **root** and click **Save** to log in.
-
-Translated with www.DeepL.com/Translator (free version)    
+To access the admin view of the database, login with **admin@eshop.de** and **admin**. After that click **Add new server**. Enter a name and switch to the **connection** tab. There you need to check the IP address of the postgres container with the command `docker inspect postgresdb`, at the end of the command output you will find the **IPAddress**. Enter the username **root** and password **root** and click **Save** to log in.   
