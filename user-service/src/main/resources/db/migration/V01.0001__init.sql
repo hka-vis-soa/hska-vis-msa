@@ -1,8 +1,10 @@
 CREATE SCHEMA IF NOT EXISTS userservice;
 
-CREATE TABLE IF NOT EXISTS userservice.users
+CREATE TABLE IF NOT EXISTS users
 (
     ID                  SERIAL PRIMARY KEY,
     FIRSTNAME           VARCHAR(20)  NOT NULL,
     LASTNAME            VARCHAR(20)  NOT NULL
 );
+
+INSERT INTO users (FIRSTNAME, LASTNAME) VALUES('admin', 'admin')
