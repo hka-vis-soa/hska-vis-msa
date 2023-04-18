@@ -23,7 +23,7 @@ The following steps are required for a deployment via docker containers.
 2. `./gradlew build`
 3. `docker-compose up`
 
-To stop the application simply write `docker-compose` down
+To stop the application simply write `docker-compose down`.
 
 ## Add more microservices
 1. Create a new directory in the root directory **hska-vis-msa**.
