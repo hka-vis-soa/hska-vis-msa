@@ -19,7 +19,7 @@ In every Microservice's application.properties file the spring profile has to be
 
 The following steps are required for a deployment via docker containers.
 
-1. Navigate to the local folder where the Studrive application is located.
+1. Navigate to the local folder where the application is located.
 2. `./gradlew build`
 3. `docker-compose up`
 
