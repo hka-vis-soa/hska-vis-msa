@@ -26,6 +26,8 @@ services:
   #user-service microservice
   user-service:
     build: ./user-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8000:8080"
     depends_on:
