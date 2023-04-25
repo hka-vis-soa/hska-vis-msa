@@ -7,20 +7,19 @@ import java.util.Objects;
 @Entity
 @Table(name = "categories", schema="categoryservice")
 public class Category {
+
 	/**
 	 * Don't delete hibernate empty constructor
 	 */
 	public Category() {
 	}
 
-	public Category(String name, String description) {
+	public Category(String name) {
 		this.name = name;
-		this.description = description;
 	}
 
 	private Long id;
 	private String name;
-	private String description;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -37,14 +36,6 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@Column(name = "description", nullable = true)
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -52,24 +43,20 @@ public class Category {
 		if(o == null || getClass() != o.getClass()) return false;
 		Category category = (Category) o;
 		if(!Objects.equals(id, category.id)) return false;
-		if(!Objects.equals(name, category.name)) return false;
-		return Objects.equals(description, category.description);
+		return Objects.equals(name, category.name);
 	}
 
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (description != null ? description.hashCode() : 0);
 		return result;
 	}
 
 	@Override
 	public String toString() {
 		return "Category{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
+				"name='" + name + '\'' +
 				'}';
 	}
 }
