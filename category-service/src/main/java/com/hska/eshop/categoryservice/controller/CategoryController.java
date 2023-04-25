@@ -1,22 +1,50 @@
 package com.hska.eshop.categoryservice.controller;
 
+import com.hska.eshop.categoryservice.model.Category;
 import com.hska.eshop.categoryservice.service.CategoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1/categories")
 public class CategoryController {
 
 	private final CategoryService categoryService;
+	private final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 	public CategoryController(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
 
-	@GetMapping(path = "/hello")
-	public String getHello() {
-		return categoryService.getHello();
+	@PostMapping(path = "/")
+	public ResponseEntity<Category> createCategory(@RequestBody CreateCategoryRequest request) {
+		logger.info("Add new category: " + request.getName());
+		Optional<Category> optCategory = categoryService.createCategory(request.getName());
+		return optCategory
+				.map(category -> new ResponseEntity<>(category, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
+	}
+	@GetMapping(path = "/")
+	public List<Category> getAllCategories() {
+		logger.info("Received getAllCategories request");
+		return categoryService.getAllCategories();
+
+	}
+
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<List<Category>> deleteCategoryById(@PathVariable Long id) {
+		logger.info("Received deleteCategoryById request with id: " + id);
+		Long deletedId = categoryService.deleteCategoryById(id);
+		logger.info("Deleted category with id: " + id);
+		List<Category> categories = categoryService.getAllCategories();
+		return Objects.equals(deletedId, id)
+				? new ResponseEntity<>(categories, HttpStatus.OK)
+				: new ResponseEntity<>(categories, HttpStatus.NOT_FOUND);
 	}
 }
