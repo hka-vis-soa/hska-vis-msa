@@ -39,4 +39,4 @@ To stop the application simply write `docker-compose down`.
 
 Can be found here http://localhost:5050/. 
 
-To access the admin view of the database, login with **admin@eshop.com** and **admin**. After that click **Add new server**. Enter a name and switch to the **connection** tab. There you need to check the IP address of the postgres container with the command `docker inspect postgresdb`, at the end of the command output you will find the **IPAddress** that is used as the host address. Enter the username **root** and password **root** and click **Save** to log in.   
+To access the admin view of the database, login with **admin@eshop.com** and **admin**. Then click **Add new server**. Enter a name and switch to the **connection** tab. You can use the postgres container name **postgresdb** as the Host name/address. Finally, enter the username **admin** and password **admin** and click **Save** to login.   

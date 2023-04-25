@@ -4,4 +4,4 @@ rootProject.name = 'hska-vis-msa'
  To do this, create a new directory in the root project "hska-vis-msa".
  After that, include the name of the directory here and load the gradle changes
  */
-include 'user-service'
+include 'category-service'

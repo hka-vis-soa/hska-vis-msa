@@ -8,10 +8,10 @@ services:
     ports:
       - "5432:5433"
     volumes:
-      - postgresdata:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=eshopdb
   pgadmin:
     image: dpage/pgadmin4
@@ -21,11 +21,13 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@eshop.com
       - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin:/var/lib/pgadmin
     depends_on:
       - postgres
-  #user-service microservice
-  user-service:
-    build: ./user-service
+  #category-service microservice
+  category-service:
+    build: ./category-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -34,4 +36,5 @@ services:
       - postgres
 
 volumes:
-  postgresdata: {}
+  postgres: {}
+  pgadmin: {}
