@@ -5,3 +5,4 @@ rootProject.name = 'hska-vis-msa'
  After that, include the name of the directory here and load the gradle changes
  */
 include 'category-service'
+include 'product-service'

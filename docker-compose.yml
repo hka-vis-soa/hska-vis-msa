@@ -34,6 +34,15 @@ services:
       - "8000:8080"
     depends_on:
       - postgres
+  #product-service microservice
+  product-service:
+    build: ./product-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8001:8081"
+    depends_on:
+      - postgres
 
 volumes:
   postgres: {}
