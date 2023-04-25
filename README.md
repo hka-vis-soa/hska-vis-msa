@@ -30,7 +30,7 @@ To stop the application simply write `docker-compose down`.
 2. Add the new directory name to the **settings.gradle** file in the root directory
 3. Add the **build.gradle** file to the new directory
 4. Add the path src/main/java
-5. Now you can rebuild for example the user-service with a resource folder... 
+5. Now you can rebuild for example the [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service) with a resource folder... 
 
 
 ## Useful tools
