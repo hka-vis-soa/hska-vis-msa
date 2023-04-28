@@ -11,7 +11,8 @@
 
 ## Microservices
 
-[TODO]
+- [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service): Management of categories
+- [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service): Management of products
 
 ## Getting Started
 
