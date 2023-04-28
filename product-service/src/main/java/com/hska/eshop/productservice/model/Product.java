@@ -1,10 +1,9 @@
 package com.hska.eshop.productservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "products", schema="productsservice")
 public class Product {
 
     @Id
@@ -22,8 +21,7 @@ public class Product {
     /**
      * Don't delete hibernate empty constructor
      */
-    public Product() {
-    }
+    public Product() {}
 
     public Product(String name, Double price, String description, Long category_id) {
         this.name = name;
