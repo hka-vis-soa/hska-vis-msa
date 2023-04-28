@@ -14,6 +14,16 @@
 - [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service): Management of categories
 - [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service): Management of products
 
+## Swagger UI
+
+API documentation is provided via Swagger UI.
+- [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service):   http://localhost:8000/swagger-ui/index.html
+- [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service):     http://localhost:8001/swagger-ui/index.html
+
+To create a Swagger UI for future microservices, the [openapi-config](https://github.com/dnszlr/studrive/tree/master/openapi-config) module must be imported to the respective service.
+
+A example can be found here [here](https://github.com/dnszlr/studrive/blob/master/offer-service/src/main/java/com/zeller/studrive/offerservice/OfferServiceApplication.java)
+
 ## Getting Started
 
 In every Microservice's application.properties file the spring profile has to be selected to run locally or via docker container.
