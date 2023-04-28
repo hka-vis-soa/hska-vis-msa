@@ -6,3 +6,4 @@ rootProject.name = 'hska-vis-msa'
  */
 include 'category-service'
 include 'product-service'
+include 'openapi-config'

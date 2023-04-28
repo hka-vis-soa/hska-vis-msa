@@ -4,4 +4,5 @@ plugins {
 }
 dependencies {
     // most dependencies are in root folders build.gradle
+    implementation project(path: ':openapi-config')
 }
