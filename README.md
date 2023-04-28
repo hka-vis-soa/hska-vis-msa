@@ -20,7 +20,7 @@ API documentation is provided via Swagger UI.
 - [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service):   http://localhost:8000/swagger-ui/index.html
 - [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service):     http://localhost:8001/swagger-ui/index.html
 
-To create a Swagger UI for future microservices, the [openapi-config](https://github.com/hka-vis-soa/hska-vis-msa)/tree/master/openapi-config) module must be imported to the respective service.
+To create a Swagger UI for future microservices, the [openapi-config](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/openapi-config) module must be imported to the respective service.
 
 ## Getting Started
 
