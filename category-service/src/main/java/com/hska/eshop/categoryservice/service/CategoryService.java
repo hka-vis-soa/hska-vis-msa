@@ -17,8 +17,8 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-	public Optional<Category> createCategory(String name) {
-		return name != null ? Optional.of(categoryRepository.save(new Category(name))) : Optional.empty();
+	public Optional<Category> createCategory(Category category) {
+		return Optional.of(categoryRepository.save(category));
 	}
 
 	public List<Category> getAllCategories() {

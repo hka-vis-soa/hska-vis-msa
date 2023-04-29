@@ -23,25 +23,24 @@ public class CategoryController {
 	}
 
 	@PostMapping(path = "/")
-	public ResponseEntity<Category> createCategory(@RequestBody CreateCategoryRequest request) {
-		logger.info("Add new category: " + request.getName());
-		Optional<Category> optCategory = categoryService.createCategory(request.getName());
+	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+		logger.info("Add new category: " + category);
+		Optional<Category> optCategory = categoryService.createCategory(category);
 		return optCategory
-				.map(category -> new ResponseEntity<>(category, HttpStatus.OK))
+				.map(createdcategory -> new ResponseEntity<>(createdcategory, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
 	@GetMapping(path = "/")
 	public List<Category> getAllCategories() {
 		logger.info("Received getAllCategories request");
 		return categoryService.getAllCategories();
-
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<List<Category>> deleteCategoryById(@PathVariable Long id) {
 		logger.info("Received deleteCategoryById request with id: " + id);
 		Long deletedId = categoryService.deleteCategoryById(id);
-		logger.info("Deleted category with id: " + id);
+		logger.info("Deleted category with id: " + deletedId);
 		List<Category> categories = categoryService.getAllCategories();
 		return Objects.equals(deletedId, id)
 				? new ResponseEntity<>(categories, HttpStatus.OK)
