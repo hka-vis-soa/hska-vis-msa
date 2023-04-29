@@ -29,8 +29,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-
-    //getAllProductsByCategory
+    public List<Product> getProductsByCategoryId(Long category_id) {
+        return productRepository.findByCategoryId(category_id);
+    }
 
     @Transactional
     public Long deleteProductById(Long id) {

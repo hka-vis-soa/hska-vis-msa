@@ -2,6 +2,7 @@ package com.hska.eshop.productservice.controller;
 
 import com.hska.eshop.productservice.model.Product;
 import com.hska.eshop.productservice.service.ProductService;
+import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -37,6 +37,12 @@ public class ProductController {
     public List<Product> getAllProducts() {
         logger.info("Received getAllProducts request");
         return productService.getAllProducts();
+    }
+
+    @GetMapping(path = "/category/{id}")
+    public List<Product> getProductsByCategoryId(@PathVariable Long id) {
+        logger.info("Received getProductsByCategoryId request");
+        return productService.getProductsByCategoryId(id);
     }
 
     @DeleteMapping(path = "/{id}")
