@@ -32,7 +32,10 @@ public class ProductService {
 
     //getAllProductsByCategory
 
-    //deleteProduct
+    @Transactional
+    public Long deleteProductById(Long id) {
+        return productRepository.deleteProductById(id);
+    }
 
 
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +39,14 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<List<Product>> deleteProductById(@PathVariable Long id) {
+        logger.info("Received deleteProductById request with id: " + id);
+        Long deletedId = productService.deleteProductById(id);
+        logger.info("Deleted product with id: " + id);
+        List<Product> products = productService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
 
 }
