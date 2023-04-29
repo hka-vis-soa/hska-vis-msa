@@ -3,7 +3,7 @@ package com.hska.eshop.productservice.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "products", schema="productsservice")
+@Table(name = "products", schema="productservice")
 public class Product {
 
     @Id
