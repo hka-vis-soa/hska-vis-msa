@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +31,13 @@ public class ProductController {
                 .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
     }
+
+    @GetMapping(path = "/")
+    public List<Product> getAllProducts() {
+        logger.info("Received getAllProducts request");
+        return productService.getAllProducts();
+    }
+
 
 
 }
