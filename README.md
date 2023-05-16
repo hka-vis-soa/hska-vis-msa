@@ -11,16 +11,16 @@
 
 ## Microservices
 
-- [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service): Management of categories
-- [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service): Management of products
+- [category-service](category-service): Management of categories
+- [product-service](product-service): Management of products
 
 ## Swagger UI
 
 API documentation is provided via Swagger UI.
-- [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service):   http://localhost:8000/swagger-ui/index.html
-- [product-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/product-service):     http://localhost:8001/swagger-ui/index.html
+- [category-service](category-service):   http://localhost:8000/swagger-ui/index.html
+- [product-service](product-service):     http://localhost:8001/swagger-ui/index.html
 
-To create a Swagger UI for future microservices, the [openapi-config](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/openapi-config) module must be imported to the respective service.
+To create a Swagger UI for future microservices, the [openapi-config](openapi-config) module must be imported to the respective service.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ To stop the application simply write `docker-compose down`.
 2. Add the new directory name to the **settings.gradle** file in the root directory
 3. Add the **build.gradle** file to the new directory
 4. Add the path src/main/java
-5. Now you can rebuild for example the [category-service](https://github.com/hka-vis-soa/hska-vis-msa/tree/master/category-service) with a resource folder... 
+5. Now you can rebuild for example the [category-service](category-service) with a resource folder... 
 
 
 ## Useful tools
