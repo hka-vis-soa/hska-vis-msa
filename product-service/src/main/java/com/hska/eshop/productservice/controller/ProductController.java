@@ -24,7 +24,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping(path = "/")
+    @PostMapping
     public ResponseEntity<Product> createCategory(@RequestBody CreateProductRequest request) {
         logger.info("Add new product: " + request.getName() + " with category_id: " + request.getCategory_id());
         Optional<Product> optProduct = productService.createProduct(request.getName(), request.getPrice(), request.getDescription(), request.getCategory_id());
@@ -33,7 +33,7 @@ public class ProductController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
     }
 
-    @GetMapping(path = "/")
+    @GetMapping
     public List<Product> getAllProducts() {
         logger.info("Received getAllProducts request");
         return productService.getAllProducts();
