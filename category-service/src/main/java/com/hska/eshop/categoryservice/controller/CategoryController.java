@@ -22,7 +22,7 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	@PostMapping(path = "/")
+	@PostMapping
 	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 		logger.info("Add new category: " + category);
 		Optional<Category> optCategory = categoryService.createCategory(category);
@@ -30,7 +30,7 @@ public class CategoryController {
 				.map(createdcategory -> new ResponseEntity<>(createdcategory, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
-	@GetMapping(path = "/")
+	@GetMapping
 	public List<Category> getAllCategories() {
 		logger.info("Received getAllCategories request");
 		return categoryService.getAllCategories();
