@@ -24,17 +24,20 @@ public class Category {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override
