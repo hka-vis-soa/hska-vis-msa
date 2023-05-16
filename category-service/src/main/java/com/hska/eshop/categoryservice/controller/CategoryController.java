@@ -39,8 +39,9 @@ public class CategoryController {
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<List<Category>> deleteCategoryById(@PathVariable Long id) {
 		logger.info("Received deleteCategoryById request with id: " + id);
+		Optional<Long> deletedId = categoryService.deleteCategoryById(id);
 		List<Category> categories = categoryService.getAllCategories();
-		return categoryService.deleteCategoryById(id)
+		return deletedId
 				.map(delId -> new ResponseEntity<>(categories, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(categories, HttpStatus.CONFLICT));
 	}
