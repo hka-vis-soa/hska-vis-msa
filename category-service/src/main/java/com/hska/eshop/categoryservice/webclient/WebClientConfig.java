@@ -9,7 +9,8 @@ public class WebClientConfig {
 
     @Bean("productClient")
     public WebClient product() {
-        return WebClient.create("${PRODUCT_SERVICE_URL:localhost:8001}");
+        String uri = System.getenv("PRODUCT_SERVICE_URL");
+        return WebClient.create(uri == null || uri.isEmpty() ? "http://localhost:8001" : uri);
     }
 
 }

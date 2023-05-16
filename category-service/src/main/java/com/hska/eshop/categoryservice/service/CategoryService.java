@@ -28,8 +28,11 @@ public class CategoryService {
 		return categoryRepository.findAll();
 	}
 	@Transactional
-	public Long deleteCategoryById(Long id) {
-
-		return categoryRepository.deleteCategoryById(id);
+	public Optional<Long> deleteCategoryById(Long id) {
+		Optional<Long> deletedId = Optional.empty();
+		if(this.requestClient.hasNoReferencedProducts(id)) {
+			deletedId = Optional.of(categoryRepository.deleteCategoryById(id));
+		}
+		return deletedId;
 	}
 }

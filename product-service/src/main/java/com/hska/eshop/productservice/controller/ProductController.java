@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/category/{id}/verify")
-    public boolean verifyProductsForCategory(@PathVariable Long id) {
+    public boolean hasNoReferencedProducts(@PathVariable Long id) {
         logger.info("Received verifyProductsForCategory request with id: " + id);
         return productService.getProductsByCategoryId(id).isEmpty();
     }
@@ -55,7 +55,7 @@ public class ProductController {
     public ResponseEntity<List<Product>> deleteProductById(@PathVariable Long id) {
         logger.info("Received deleteProductById request with id: " + id);
         Long deletedId = productService.deleteProductById(id);
-        logger.info("Deleted product with id: " + id);
+        logger.info("Deleted product with id: " + deletedId);
         List<Product> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }

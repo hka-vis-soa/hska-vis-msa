@@ -24,11 +24,12 @@ public class RequestClient {
     /**
      * Checks if there are products linked to the given categoryId
      * @param categoryId
-     * @return true if there are no linked products, false if not
+     * @return true if there are no referenced products, false if not
      */
-    public boolean verifyProductsForCategory(Long categoryId) {
+    public boolean hasNoReferencedProducts(Long categoryId) {
+        logger.info("RequestClient#hasNoReferencedProducts#sendRequestForCategoryWithId#" + categoryId);
         String path = "/v1/products/category/" + categoryId + "/verify";
-        logger.info("RequestClient.verifyProductsForCategory called with: " + categoryId);
+        this.logger.info("RequestClient#hasNoReferencedProducts#path: " + path);
         return Boolean.TRUE.equals(productClient.get().uri(path)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
