@@ -41,6 +41,16 @@ To stop the application simply write `docker-compose down`.
 4. Add the path src/main/java
 5. Now you can rebuild for example the [category-service](category-service) with a resource folder... 
 
+## Build docker image & push it to Docker Hub
+* Create
+[Docker Hub](https://hub.docker.com/) account.
+
+* Log into your created docker hub account on the command line via `docker login`
+
+* Assign your account name to the `DOCKER_ACCOUNT` environment variable.
+
+* Run the `docker-build.sh` shell script. It builds and pushes the docker images
+to the docker hub.
 
 ## Useful tools
 
