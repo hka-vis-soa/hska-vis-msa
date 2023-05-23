@@ -34,6 +34,10 @@ The following steps are required for a deployment via docker containers.
 
 To stop the application simply write `docker-compose down`.
 
+## Kubernetes
+
+To deploy a kubernetes cluster, use `kubectl apply -Rf k8s-config`.
+
 ## Add more microservices
 1. Create a new directory in the root directory **hska-vis-msa**.
 2. Add the new directory name to the **settings.gradle** file in the root directory
