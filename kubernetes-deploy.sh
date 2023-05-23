@@ -5,6 +5,11 @@
 #    exit 1
 #fi
 
+# DO NOT USE THIS FILE! (outdated and incomplete)
+# Use
+#   kubectl apply -f microservices.yaml
+# instead.
+
 kubectl create deployment postgres --image=postgres:latest --port 5432
 kubectl expose deployment postgres --target-port 5432
 
