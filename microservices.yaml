@@ -40,6 +40,7 @@ spec:
 
 ---
 
+# accessible hat http://localhost:5050 with 'kubectl port-forward deployment/pgadmin 5050:80'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -64,6 +65,14 @@ spec:
               value: admin@eshop.com
             - name: PGADMIN_DEFAULT_PASSWORD
               value: admin
+          volumeMounts:
+            - name: config-volume
+              mountPath: /pgadmin4/servers.json
+              subPath: servers.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: pgadmin-config
 
 ---
 
@@ -266,3 +275,36 @@ spec:
     - protocol: TCP
       port: 8888
       targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+data:
+  servers.json: |-
+    {
+      "Servers": {
+        "1": {
+          "Name": "WebshopDB",
+          "Group": "Servers",
+          "Host": "postgresdb",
+          "Port": 5432,
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres",
+          "Username": "admin",
+          "PassFile": "",
+          "SSLCompression": 0,
+          "SSLInsecureRenegotiation": 0,
+          "SSLCert": "",
+          "SSLCipher": "",
+          "KeyFile": "",
+          "SSLRootCert": "",
+          "SSLCrl": "",
+          "SSLCompression": 0,
+          "Timeout": 10,
+          "ApplicationName": "pgAdmin 4 - default"
+        }
+      }
+    }
