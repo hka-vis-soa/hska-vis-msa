@@ -3,7 +3,6 @@ package com.hska.eshop.productservice.service;
 import com.hska.eshop.productservice.model.Product;
 import com.hska.eshop.productservice.repository.ProductRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +17,8 @@ public class ProductService {
     }
 
 
-    public Optional<Product> createProduct(String name, Double price, String description, Long category_id) {
-        if (name == null || price == null || description == null || category_id == null) {
-            return Optional.empty();
-        } else {
-            return Optional.of(productRepository.save(new Product(name, price, description, category_id)));
-        }
+    public Optional<Product> createProduct(Product product) {
+        return Optional.of(productRepository.save(product));
     }
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -34,10 +29,15 @@ public class ProductService {
     }
 
     @Transactional
-    public Long deleteProductById(Long id) {
-        return productRepository.deleteProductById(id);
+    public Optional<Long> deleteProductById(Long id) {
+        return Optional.of(productRepository.deleteProductById(id));
     }
 
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
 
-
+    public List<Product> getProductsForSearchValues(String description, Double minPrice, Double maxPrice) {
+        return productRepository.findProductsForSearchValues(description, minPrice, maxPrice);
+    }
 }
