@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,11 +26,11 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createCategory(@RequestBody CreateProductRequest request) {
-        logger.info("Add new product: " + request.getName() + " with category_id: " + request.getCategory_id());
-        Optional<Product> optProduct = productService.createProduct(request.getName(), request.getPrice(), request.getDescription(), request.getCategory_id());
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        logger.info("Add new product: " + product);
+        Optional<Product> optProduct = productService.createProduct(product);
         return optProduct
-                .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+                .map(createdProduct -> new ResponseEntity<>(createdProduct, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
     }
 
@@ -37,6 +38,25 @@ public class ProductController {
     public List<Product> getAllProducts() {
         logger.info("Received getAllProducts request");
         return productService.getAllProducts();
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        logger.info("Received getProductById request with id: " + id);
+        Optional<Product> product = productService.getProductById(id);
+        return product.map(byId -> new ResponseEntity<>(byId, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    @GetMapping(path = "/search")
+    public List<Product> getProductsForSearchValues(
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "minPrice", required = false) Double minPrice,
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice)
+    {
+        logger.info("Received getProductsForSearchValues request with description: " + description + " minPrice " + minPrice + " maxPrice " + maxPrice);
+        return productService.getProductsForSearchValues(description, minPrice, maxPrice);
     }
 
     @GetMapping(path = "/category/{id}")
@@ -54,10 +74,11 @@ public class ProductController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<List<Product>> deleteProductById(@PathVariable Long id) {
         logger.info("Received deleteProductById request with id: " + id);
-        Long deletedId = productService.deleteProductById(id);
-        logger.info("Deleted product with id: " + deletedId);
+        Optional<Long> deletedId = productService.deleteProductById(id);
         List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return deletedId
+                .map(delId -> new ResponseEntity<>(products, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(products, HttpStatus.CONFLICT));
     }
 
 

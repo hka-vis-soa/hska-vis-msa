@@ -62,11 +62,11 @@ public class Product {
         this.description = description;
     }
 
-    public Long getCategoryId() {
+    public Long getCategory_id() {
         return category_id;
     }
 
-    public void setCategoryId(Long category_id) {
+    public void setCategory_id(Long category_id) {
         this.category_id = category_id;
     }
 }
