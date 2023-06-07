@@ -42,7 +42,7 @@ spec:
 
 ---
 
-# accessible hat http://localhost:6060 with 'kubectl port-forward deployment/phpmyadmin 6060:80'
+# accessible at http://localhost:6060 with 'kubectl port-forward deployment/phpmyadmin 6060:80'
 apiVersion: apps/v1
 kind: Deployment
 metadata:

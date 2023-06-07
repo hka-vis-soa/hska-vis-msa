@@ -40,7 +40,7 @@ spec:
 
 ---
 
-# accessible hat http://localhost:5050 with 'kubectl port-forward deployment/pgadmin 5050:80'
+# accessible at http://localhost:5050 with 'kubectl port-forward deployment/pgadmin 5050:80'
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -27,6 +27,11 @@ spec:
 
 ---
 
+# accessible with 'kubectl port-forward deployment/reverse-proxy-depl 80:80'
+#  - http://localhost/dashboard/phpmyadmin
+#  - http://localhost/dashboard/pgadmin
+#  - http://localhost/api/v1/product
+#  - http://localhost/api/v1/category
 apiVersion: v1
 kind: Service
 metadata:
@@ -57,14 +62,28 @@ data:
           proxy_pass http://pgadmin:5050/;
           proxy_redirect default;
           proxy_redirect http://pgadmin:5050/ http://localhost/dashboard/pgadmin/;
-          proxy_set_header X-Script-Name /dashboard/pgadmin;
+          proxy_set_header X-Script-Name /dashboard/pgadmin/;
         }
 
         location /dashboard/phpmyadmin/ {
           proxy_pass http://phpmyadmin:6060/;
           proxy_redirect default;
           proxy_redirect http://phpmyadmin:6060/ http://localhost/dashboard/phpmyadmin/;
-          proxy_set_header X-Script-Name /dashboard/phpmyadmin;
+          proxy_set_header X-Script-Name /dashboard/phpmyadmin/;
+        }
+
+        location /api/v1/product/ {
+          proxy_pass http://product-service:8001/v1/products/;
+          proxy_redirect default;
+          proxy_redirect http://product-service:8001/v1/products/ http://localhost/api/product/;
+          proxy_set_header X-Script-Name /api/v1/product/;
+        }
+
+        location /api/v1/category/ {
+          proxy_pass http://category-service:8000/v1/categories/;
+          proxy_redirect default;
+          proxy_redirect http://category-service:8000/v1/categories/ http://localhost/api/category/;
+          proxy_set_header X-Script-Name /api/v1/category/;
         }
       }
     }
