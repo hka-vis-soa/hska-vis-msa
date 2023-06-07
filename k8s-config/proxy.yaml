@@ -27,11 +27,14 @@ spec:
 
 ---
 
-# accessible with 'kubectl port-forward deployment/reverse-proxy-depl 80:80'
-#  - http://localhost/dashboard/phpmyadmin
-#  - http://localhost/dashboard/pgadmin
-#  - http://localhost/api/v1/product
-#  - http://localhost/api/v1/category
+# accessible with 'kubectl port-forward svc/reverse-proxy-svc 80:80'
+#  - http://localhost/dashboard/phpmyadmin/
+#  - http://localhost/dashboard/pgadmin/
+#  - http://localhost/api/v1/product/
+#  - http://localhost/api/v1/category/
+#  - http://localhost/swagger/product/
+#  - http://localhost/swagger/category/
+apiVersion: v1
 apiVersion: v1
 kind: Service
 metadata:
@@ -84,6 +87,20 @@ data:
           proxy_redirect default;
           proxy_redirect http://category-service:8000/v1/categories/ http://localhost/api/category/;
           proxy_set_header X-Script-Name /api/v1/category/;
+        }
+
+        location /swagger/product/ {
+          proxy_pass http://product-service:8001/swagger-ui/;
+          proxy_redirect default;
+          proxy_redirect http://product-service:8001/swagger-ui/ http://localhost/swagger/product/;
+          proxy_set_header X-Script-Name /swagger/product/;
+        }
+
+        location /swagger/category/ {
+          proxy_pass http://category-service:8000/swagger-ui/;
+          proxy_redirect default;
+          proxy_redirect http://category-service:8000/swagger-ui/ http://localhost/swagger/category/;
+          proxy_set_header X-Script-Name /swagger/category/;
         }
       }
     }
