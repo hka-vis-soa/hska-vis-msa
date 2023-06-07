@@ -55,21 +55,16 @@ data:
 
         location /dashboard/pgadmin/ {
           proxy_pass http://pgadmin:5050/;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_redirect default;
+          proxy_redirect http://pgadmin:5050/ http://localhost/dashboard/pgadmin/;
           proxy_set_header X-Script-Name /dashboard/pgadmin;
-          proxy_redirect ~^(http://[^:]+):\d+(.*)$ $scheme://$host/dashboard/pgadmin$2;
         }
 
         location /dashboard/phpmyadmin/ {
           proxy_pass http://phpmyadmin:6060/;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_redirect ~^(http://[^:]+):\d+(.*)$ $scheme://$host/dashboard/phpmyadmin$2;
+          proxy_redirect default;
+          proxy_redirect http://phpmyadmin:6060/ http://localhost/dashboard/phpmyadmin/;
+          proxy_set_header X-Script-Name /dashboard/phpmyadmin;
         }
       }
     }
