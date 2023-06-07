@@ -66,11 +66,11 @@ spec:
             - name: PGADMIN_DEFAULT_PASSWORD
               value: admin
           volumeMounts:
-            - name: config-volume
+            - name: pgadmin-config
               mountPath: /pgadmin4/servers.json
               subPath: servers.json
       volumes:
-        - name: config-volume
+        - name: pgadmin-config
           configMap:
             name: pgadmin-config
 
