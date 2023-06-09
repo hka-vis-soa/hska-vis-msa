@@ -1,29 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reverse-proxy-depl
+  name: reverse-proxy
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: reverse-proxy-depl
+      app: reverse-proxy
   template:
     metadata:
       labels:
-        app: reverse-proxy-depl
+        app: reverse-proxy
     spec:
       containers:
-        - name: reverse-proxy-depl
-          image: nginx
+        - name: reverse-proxy
+          image: bitnami/apache:latest
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
+            - name: reverse-proxy-config
+              mountPath: /usr/local/apache2/conf/httpd.conf
+              subPath: httpd.conf
       volumes:
-        - name: nginx-config
+        - name: reverse-proxy-config
           configMap:
-            name: nginx-config
+            name: reverse-proxy-config
+
 
 ---
 
@@ -37,10 +39,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: reverse-proxy-svc
+  name: reverse-proxy
 spec:
   selector:
-    app: reverse-proxy-depl
+    app: reverse-proxy
   type: ClusterIP
   ports:
     - protocol: TCP
@@ -51,55 +53,32 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: reverse-proxy-config
 data:
-  nginx.conf: |-
-    events { }
+  httpd.conf: |-
+    <VirtualHost *:80>
+        ServerName localhost
 
-    http {
-      server {
-        listen 80;
+        ErrorLog /dev/stderr
+        CustomLog /dev/stdout combined
 
-        location /dashboard/pgadmin {
-          proxy_pass http://pgadmin:5050;
-          proxy_redirect default;
-          proxy_redirect http://pgadmin:5050 http://localhost/dashboard/pgadmin;
-          proxy_set_header X-Script-Name /dashboard/pgadmin;
-        }
+        ProxyPreserveHost On
 
-        location /dashboard/phpmyadmin/ {
-          proxy_pass http://phpmyadmin:6060/;
-          proxy_redirect default;
-          proxy_redirect http://phpmyadmin:6060/ http://localhost/dashboard/phpmyadmin/;
-          proxy_set_header X-Script-Name /dashboard/phpmyadmin/;
-        }
+        ProxyPass         /dashboard/pgadmin http://pgadmin:5050/
+        ProxyPassReverse  /dashboard/pgadmin http://pgadmin:5050/
 
-        location /api/v1/product {
-          proxy_pass http://product-service:8001/v1/products;
-          proxy_redirect default;
-          proxy_redirect http://product-service:8001/v1/products http://localhost/api/product;
-          proxy_set_header X-Script-Name /api/v1/product;
-        }
+        ProxyPass         /dashboard/phpmyadmin http://phpmyadmin:6060/
+        ProxyPassReverse  /dashboard/phpmyadmin http://phpmyadmin:6060/
 
-        location /api/v1/category {
-          proxy_pass http://category-service:8000/v1/categories;
-          proxy_redirect default;
-          proxy_redirect http://category-service:8000/v1/categories http://localhost/api/category;
-          proxy_set_header X-Script-Name /api/v1/category;
-        }
+        ProxyPass         /api/v1/product http://product-service:8001/v1/products
+        ProxyPassReverse  /api/v1/product http://product-service:8001/v1/products
 
-        location /swagger/product/ {
-          proxy_pass http://product-service:8001/swagger-ui/;
-          proxy_redirect default;
-          proxy_redirect http://product-service:8001/swagger-ui/ http://localhost/swagger/product/;
-          proxy_set_header X-Script-Name /swagger/product/;
-        }
+        ProxyPass         /api/v1/category http://category-service:8000/v1/categories
+        ProxyPassReverse  /api/v1/category http://category-service:8000/v1/categories
 
-        location /swagger/category/ {
-          proxy_pass http://category-service:8000/swagger-ui/;
-          proxy_redirect default;
-          proxy_redirect http://category-service:8000/swagger-ui/ http://localhost/swagger/category/;
-          proxy_set_header X-Script-Name /swagger/category/;
-        }
-      }
-    }
+        ProxyPass         /swagger/product http://product-service:8001/swagger-ui/index.html
+        ProxyPassReverse  /swagger/product http://product-service:8001/swagger-ui/index.html
+
+        ProxyPass         /swagger/category http://category-service:8000/swagger-ui/index.html
+        ProxyPassReverse  /swagger/category http://category-service:8000/swagger-ui/index.html
+    </VirtualHost>
