@@ -38,6 +38,21 @@ To stop the application simply write `docker-compose down`.
 
 To deploy a kubernetes cluster, use `kubectl apply -Rf k8s-config`.
 
+## Kubernetes with istio and proxy
+1. Start the cluster via `minikube start`
+2. Open the dashboard via `minikube dashboard` (Optional)
+3. [Download istio](https://istio.io/latest/docs/setup/getting-started/#download) and add the environment variable to path
+4. Install istio `istioctl install --set profile=demo -y`
+5. Enable istio for upcoming deployments `kubectl label namespace default istio-injection=enabled`
+6. Run `kubectl apply -f samples/addons` **in the folder where you unzipped the istio download**
+7. Build the microservices `./gradlew build` (Optional)
+8. Build the microservice images `./docker-build.sh` (change the dockerhub account in /k8s-config/microservices.yaml if required)
+9. Start the deployments `kubectl apply -Rf k8s-config`
+10. `kubectl port-forward svc/reverse-proxy-svc 80:80`
+11. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
+12. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
+13. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
+
 ## Add more microservices
 1. Create a new directory in the root directory **hska-vis-msa**.
 2. Add the new directory name to the **settings.gradle** file in the root directory
