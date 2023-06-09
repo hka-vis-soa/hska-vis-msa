@@ -100,7 +100,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
             - name: PRODUCT_SERVICE_URL
-              value: http://product-service:8080
+              value: http://product-service:80/api
 
 ---
 
