@@ -48,7 +48,7 @@ To deploy a kubernetes cluster, use `kubectl apply -Rf k8s-config`.
 7. Build the microservices `./gradlew build` (Optional)
 8. Build the microservice images `./docker-build.sh` (change the dockerhub account in /k8s-config/microservices.yaml if required)
 9. Start the deployments `kubectl apply -Rf k8s-config`
-10. `kubectl port-forward svc/reverse-proxy-svc 80:80`
+10. `kubectl port-forward deployment/apache 8080:80`
 11. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
 12. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
 13. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
