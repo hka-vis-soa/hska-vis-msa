@@ -48,7 +48,10 @@ spec:
             - name: PMA_USER
               value: webshopuser
             - name: PMA_PASSWORD
-              value: 240b2c6d58ff2ce2f508b49f
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: pma_password
             - name: PMA_DBNAME
               value: webshop
 

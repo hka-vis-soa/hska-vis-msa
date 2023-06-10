@@ -22,7 +22,10 @@ spec:
             - name: PGADMIN_DEFAULT_EMAIL
               value: admin@eshop.com
             - name: PGADMIN_DEFAULT_PASSWORD
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: pgadmin_default_password
           volumeMounts:
             - name: pgadmin-config
               mountPath: /pgadmin4/servers.json

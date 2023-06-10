@@ -41,19 +41,22 @@ To deploy a kubernetes cluster, use `kubectl apply -Rf k8s-config`.
 ## Kubernetes with istio and proxy
 1. Start the cluster via `minikube start`
 2. Open the dashboard via `minikube dashboard` (Optional)
+   (Optional block start)
 3. [Download istio](https://istio.io/latest/docs/setup/getting-started/#download) and add the environment variable to path
 4. Install istio `istioctl install --set profile=demo -y`
 5. Enable istio for upcoming deployments `kubectl label namespace default istio-injection=enabled`
 6. Run `kubectl apply -f samples/addons` **in the folder where you unzipped the istio download**
 7. Build the microservices `./gradlew build` (Optional)
 8. Build the microservice images `./docker-build.sh` (change the dockerhub account in /k8s-config/microservices.yaml if required)
-9. Start the database `kubectl apply -Rf k8s-config/db`
-10. Start the deployments `kubectl apply -Rf k8s-config/deployment`
-11. Start the proxy `kubectl apply -Rf k8s-config/proxy` (order is important)
-12. `kubectl port-forward deployment/apache 8080:80`
-13. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
-14. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
-15. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
+   (Optional block end)
+9. Apply the database secrets `kubectl apply -f ./k8s-config/secret/secret.yaml` (from root path)
+10. Start the database `kubectl apply -Rf k8s-config/db`
+11. Start the deployments `kubectl apply -Rf k8s-config/deployment`
+12. Start the proxy `kubectl apply -Rf k8s-config/proxy` (it is important to wait till phpmyadmin container was created)
+13. `kubectl port-forward deployment/apache 8080:80`
+14. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
+15. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
+16. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
 
 ## Add more microservices
 1. Create a new directory in the root directory **hska-vis-msa**.

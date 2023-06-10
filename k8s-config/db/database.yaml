@@ -49,11 +49,20 @@ spec:
           name: postgresdb
           env:
             - name: POSTGRES_USER
-              value: admin
+              valueFrom:
+                configMapKeyRef:
+                  name: database-data
+                  key: postgres_user
             - name: POSTGRES_PASSWORD
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: postgres_password
             - name: POSTGRES_DB
-              value: eshopdb
+              valueFrom:
+                configMapKeyRef:
+                  name: database-data
+                  key: postgres_database
           ports:
             - containerPort: 5432
               name: postgresdb
@@ -130,15 +139,26 @@ spec:
         - image: mavogel/hska-vis-web-shop-db-image:latest
           name: web-shop-db-image
           env:
-            # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
-              value: c8de110f37300a53a971749
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: mysql_root_password
             - name: MYSQL_DATABASE
-              value: webshop
+              valueFrom:
+                configMapKeyRef:
+                  name: database-data
+                  key: mysql_database
             - name: MYSQL_USER
-              value: webshopuser
+              valueFrom:
+                configMapKeyRef:
+                  name: database-data
+                  key: mysql_database
             - name: MYSQL_PASSWORD
-              value: 240b2c6d58ff2ce2f508b49f
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: mysql_password
           ports:
             - containerPort: 3306
               name: mysql
@@ -162,3 +182,17 @@ spec:
   selector:
     app: web-shop-db-image
   clusterIP: None
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-data
+data:
+  #MYSQL
+  mysql_database: webshop
+  mysql_user: webshopuser
+  #POSTGRES
+  postgres_user: admin
+  postgres_database: eshopdb
