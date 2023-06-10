@@ -2,13 +2,11 @@ package com.hska.eshop.categoryservice.controller;
 
 import com.hska.eshop.categoryservice.model.Category;
 import com.hska.eshop.categoryservice.service.CategoryService;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.InetAddress;
@@ -24,9 +22,9 @@ public class CategoryController {
 	private final HttpHeaders headers = new HttpHeaders();
 
 
-	public CategoryController(CategoryService categoryService) {
+	public CategoryController(CategoryService categoryService) throws UnknownHostException {
 		this.categoryService = categoryService;
-		headers.add("Pod-Identifier", UUID.randomUUID().toString());
+		headers.add("Pod-Identifier", InetAddress.getLocalHost().getHostAddress());
 	}
 
 	@PostMapping

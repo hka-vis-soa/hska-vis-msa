@@ -2,18 +2,54 @@
 <html>
 <head>
     <title>Hello from eShop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code {
+            color: green;
+        }
+
+        .blue-path {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
-<h1>Hello from eShop</h1>
+
 <!-- Proxy Routes -->
 <pre>
-    #Catalog
-    ProxyPass        /categories http://category-service:8080/
-    ProxyPassReverse /categories http://category-service:8080/
+    <h1>eShop Proxy</h1>
+    Forward requests with '<span class="code">kubectl port-forward deployment/apache 8080:80</span>'
 
-    #Product
-    ProxyPass        /products http://product-service:8080/
-    ProxyPassReverse /products http://product-service:8080/
-  </pre>
+    <span class="code">Catalog</span>
+    ProxyPass        /categories <span class="blue-path">http://category-service:8000/v1/categories</span>
+    ProxyPassReverse /categories <span class="blue-path">http://category-service:8000/v1/categories</span>
+    Example requests:
+        - POST  <span class="blue-path">http://localhost:8080/categories</span>
+        - GET   <span class="blue-path">http://localhost:8080/categories/1</span>
+
+    <span class="code">Product</span>
+    ProxyPass        /products <span class="blue-path">http://product-service:8001/v1/products</span>
+    ProxyPassReverse /products <span class="blue-path">http://product-service:8001/v1/products</span>
+    Example requests:
+        - POST  <span class="blue-path">http://localhost:8080/products</span>
+        - GET   <span class="blue-path">http://localhost:8080/products/1</span>
+    </pre>
 </body>
 </html>
