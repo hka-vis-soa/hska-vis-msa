@@ -37,12 +37,14 @@ spec:
     spec:
       containers:
         - name: phpmyadmin
-          image: docker.io/phpmyadmin:latest
+          image: phpmyadmin/phpmyadmin
           ports:
             - containerPort: 80
           env:
             - name: PMA_HOST
               value: web-shop-db-image
+            - name: PMA_PORT
+              value: "3306"
             - name: PMA_USER
               value: webshopuser
             - name: PMA_PASSWORD
@@ -57,15 +59,12 @@ kind: Service
 metadata:
   name: legacywebshop
 spec:
-  type: LoadBalancer
   selector:
     app: legacywebshop
   ports:
     - protocol: TCP
       port: 8888
       targetPort: 8080
-status:
-  loadBalancer: {}
 
 ---
 
