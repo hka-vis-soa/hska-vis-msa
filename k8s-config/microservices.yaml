@@ -81,7 +81,7 @@ kind: Deployment
 metadata:
   name: category-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: category-service
@@ -92,7 +92,7 @@ spec:
     spec:
       containers:
         - name: category-service
-          image: docker.io/maxoe1998/category-service:latest
+          image: docker.io/dnszlr/category-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -101,6 +101,7 @@ spec:
               value: docker
             - name: PRODUCT_SERVICE_URL
               value: http://product-service:8080
+status: {}
 
 ---
 
@@ -109,7 +110,7 @@ kind: Deployment
 metadata:
   name: product-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: product-service
@@ -120,13 +121,14 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: docker.io/maxoe1998/product-service:latest
+          image: docker.io/dnszlr/product-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
+status: {}
 
 ---
 
@@ -162,12 +164,15 @@ kind: Service
 metadata:
   name: product-service
 spec:
+  type: LoadBalancer
   selector:
     app: product-service
   ports:
     - protocol: TCP
       port: 8001
       targetPort: 8080
+status:
+  loadBalancer: {}
 
 ---
 
@@ -176,12 +181,15 @@ kind: Service
 metadata:
   name: category-service
 spec:
+  type: LoadBalancer
   selector:
     app: category-service
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8080
+status:
+  loadBalancer: {}
 
 ---
 

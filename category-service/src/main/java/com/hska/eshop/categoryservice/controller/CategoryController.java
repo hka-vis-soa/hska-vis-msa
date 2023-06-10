@@ -5,12 +5,15 @@ import com.hska.eshop.categoryservice.service.CategoryService;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/v1/categories")
@@ -18,9 +21,12 @@ public class CategoryController {
 
 	private final CategoryService categoryService;
 	private final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+	private final HttpHeaders headers = new HttpHeaders();
+
 
 	public CategoryController(CategoryService categoryService) {
 		this.categoryService = categoryService;
+		headers.add("Pod-Identifier", UUID.randomUUID().toString());
 	}
 
 	@PostMapping
@@ -28,15 +34,15 @@ public class CategoryController {
 		logger.info("Add new category: " + category);
 		Optional<Category> optCategory = categoryService.createCategory(category);
 		return optCategory
-				.map(createdCategory -> new ResponseEntity<>(createdCategory, HttpStatus.OK))
+				.map(createdCategory -> new ResponseEntity<>(createdCategory, headers, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
 
 
 	@GetMapping
-	public List<Category> getAllCategories() {
+	public ResponseEntity<List<Category>> getAllCategories() {
 		logger.info("Received getAllCategories request");
-		return categoryService.getAllCategories();
+		return new ResponseEntity<>(categoryService.getAllCategories(), headers, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/{id}")
@@ -44,7 +50,7 @@ public class CategoryController {
 		logger.info("Received getCategoryById request with id: " + id);
 		Optional<Category> category = categoryService.getCategoryById(id);
 		return category
-				.map(byId -> new ResponseEntity<>(byId, HttpStatus.OK))
+				.map(byId -> new ResponseEntity<>(byId, headers, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
@@ -54,7 +60,7 @@ public class CategoryController {
 		Optional<Long> deletedId = categoryService.deleteCategoryById(id);
 		List<Category> categories = categoryService.getAllCategories();
 		return deletedId
-				.map(delId -> new ResponseEntity<>(categories, HttpStatus.OK))
+				.map(delId -> new ResponseEntity<>(categories, headers, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(categories, HttpStatus.CONFLICT));
 	}
 }

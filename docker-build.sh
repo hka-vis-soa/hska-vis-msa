@@ -1,9 +1,13 @@
-!/bin/sh
+#!/bin/sh
 
 if [ -z "$DOCKER_ACCOUNT" ]; then
     echo "Variable DOCKER_ACCOUNT required. Use 'export DOCKER_ACCOUNT=my_account'"
     exit 1
 fi
+
+docker build --tag=apache-proxy apache-proxy
+docker tag apache-proxy $DOCKER_ACCOUNT/apache-proxy:latest
+docker push $DOCKER_ACCOUNT/apache-proxy
 
 docker build --tag=category-service category-service
 docker tag category-service $DOCKER_ACCOUNT/category-service:latest
