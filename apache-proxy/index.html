@@ -25,7 +25,7 @@
             color: green;
         }
 
-        .blue-path {
+        .a {
             color: blue;
         }
     </style>
@@ -38,18 +38,23 @@
     Forward requests with '<span class="code">kubectl port-forward deployment/apache 8080:80</span>'
 
     <span class="code">Catalog</span>
-    ProxyPass        /categories <span class="blue-path">http://category-service:8000/v1/categories</span>
-    ProxyPassReverse /categories <span class="blue-path">http://category-service:8000/v1/categories</span>
     Example requests:
-        - POST  <span class="blue-path">http://localhost:8080/categories</span>
-        - GET   <span class="blue-path">http://localhost:8080/categories/1</span>
+        - POST  http://localhost:8080/categories
+        - GET   <a href="http://localhost:8080/categories">http://localhost:8080/categories</a>
 
     <span class="code">Product</span>
-    ProxyPass        /products <span class="blue-path">http://product-service:8001/v1/products</span>
-    ProxyPassReverse /products <span class="blue-path">http://product-service:8001/v1/products</span>
     Example requests:
-        - POST  <span class="blue-path">http://localhost:8080/products</span>
-        - GET   <span class="blue-path">http://localhost:8080/products/1</span>
+        - POST  http://localhost:8080/products
+        - GET   <a href="http://localhost:8080/products">http://localhost:8080/products</a>
+
+    <span class="code">pgadmin</span>
+    Postgresql admin interface:
+        - <a href="http://localhost:8080/pgadmin/">http://localhost:8080/pgadmin/</a>
+
+    <span class="code">phpmyadmin</span>
+    Mysql admin interface:
+        - <a href="http://localhost:8080/phpmyadmin/">http://localhost:8080/phpmyadmin/</a>
+
     </pre>
 </body>
 </html>

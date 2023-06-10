@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: phpmyadmin
-          image: phpmyadmin/phpmyadmin
+          image: docker.io/phpmyadmin
           ports:
             - containerPort: 80
           env:

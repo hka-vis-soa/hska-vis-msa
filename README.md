@@ -47,11 +47,13 @@ To deploy a kubernetes cluster, use `kubectl apply -Rf k8s-config`.
 6. Run `kubectl apply -f samples/addons` **in the folder where you unzipped the istio download**
 7. Build the microservices `./gradlew build` (Optional)
 8. Build the microservice images `./docker-build.sh` (change the dockerhub account in /k8s-config/microservices.yaml if required)
-9. Start the deployments `kubectl apply -Rf k8s-config`
-10. `kubectl port-forward deployment/apache 8080:80`
-11. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
-12. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
-13. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
+9. Start the database `kubectl apply -Rf k8s-config/db`
+10. Start the deployments `kubectl apply -Rf k8s-config/deployment`
+11. Start the proxy `kubectl apply -Rf k8s-config/proxy` (order is important)
+12. `kubectl port-forward deployment/apache 8080:80`
+13. Start prometheus `kubectl -n istio-system port-forward deployment/prometheus 9090:9090`
+14. Start grafana `kubectl -n istio-system port-forward deployment/grafana 3000:3000`
+15. Start kiali `kubectl -n istio-system port-forward deployment/kiali 20001:20001`
 
 ## Add more microservices
 1. Create a new directory in the root directory **hska-vis-msa**.
