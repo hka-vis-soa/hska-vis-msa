@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacywebshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legacywebshop
+  template:
+    metadata:
+      labels:
+        app: legacywebshop
+    spec:
+      containers:
+        - name: legacywebshop
+          image: mavogel/hska-vis-legacywebshop:latest
+          ports:
+            - containerPort: 8080
+
+---
+
+# accessible at http://localhost:6060 with 'kubectl port-forward deployment/phpmyadmin 6060:80'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin
+          image: docker.io/phpmyadmin:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: web-shop-db-image
+            - name: PMA_USER
+              value: webshopuser
+            - name: PMA_PASSWORD
+              value: 240b2c6d58ff2ce2f508b49f
+            - name: PMA_DBNAME
+              value: webshop
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: legacywebshop
+spec:
+  type: LoadBalancer
+  selector:
+    app: legacywebshop
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8080
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+spec:
+  selector:
+    app: phpmyadmin
+  ports:
+    - protocol: TCP
+      port: 6060
+      targetPort: 80
