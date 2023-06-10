@@ -169,7 +169,7 @@ spec:
     app: product-service
   ports:
     - protocol: TCP
-      port: 8001
+      port: 8080
       targetPort: 8080
 status:
   loadBalancer: {}
@@ -186,7 +186,7 @@ spec:
     app: category-service
   ports:
     - protocol: TCP
-      port: 8000
+      port: 8080
       targetPort: 8080
 status:
   loadBalancer: {}

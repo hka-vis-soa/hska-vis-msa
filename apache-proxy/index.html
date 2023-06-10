@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Hello from eShop</title>
-    </head>
-    <body>
-        <h1>Hello from eShop</h1>
-    </body>
+<head>
+    <title>Hello from eShop</title>
+</head>
+<body>
+<h1>Hello from eShop</h1>
+<!-- Proxy Routes -->
+<pre>
+    #Catalog
+    ProxyPass        /categories http://category-service:8080/
+    ProxyPassReverse /categories http://category-service:8080/
+
+    #Product
+    ProxyPass        /products http://product-service:8080/
+    ProxyPassReverse /products http://product-service:8080/
+  </pre>
+</body>
 </html>
