@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello from eShop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code {
+            color: green;
+        }
+
+        .a {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Proxy Routes -->
+<pre>
+    <h1>eShop Proxy</h1>
+    Forward requests with '<span class="code">kubectl port-forward deployment/apache 8080:80</span>'
+
+    <span class="code">Catalog</span>
+    Example requests:
+        - POST  http://localhost:8080/categories
+        - GET   <a href="http://localhost:8080/categories">http://localhost:8080/categories</a>
+
+    <span class="code">Product</span>
+    Example requests:
+        - POST  http://localhost:8080/products
+        - GET   <a href="http://localhost:8080/products">http://localhost:8080/products</a>
+
+    <span class="code">pgadmin</span>
+    Postgresql admin interface:
+        - <a href="http://localhost:8080/pgadmin/">http://localhost:8080/pgadmin/</a>
+
+    <span class="code">phpmyadmin</span>
+    Mysql admin interface:
+        - <a href="http://localhost:8080/phpmyadmin/">http://localhost:8080/phpmyadmin/</a>
+
+    </pre>
+</body>
+</html>
