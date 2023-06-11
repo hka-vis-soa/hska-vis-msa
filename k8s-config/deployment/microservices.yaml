@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
         - name: category-service
-          image: docker.io/deszer/category-service:latest
+          image: docker.io/dnszlr/category-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -82,7 +82,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: docker.io/deszer/product-service:latest
+          image: docker.io/dnszlr/product-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

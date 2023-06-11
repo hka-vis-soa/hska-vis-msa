@@ -18,7 +18,7 @@ spec:
         run: apache
     spec:
       containers:
-        - image: docker.io/deszer/apache-proxy:latest
+        - image: docker.io/dnszlr/apache-proxy:latest
           name: apache
           ports:
             - containerPort: 80
