@@ -1,16 +1,16 @@
 #!/bin/bash
 #
-# Script: curl_script.sh
+# Script: load-balancing-test.sh
 # Description: This script performs multiple curl requests to a specified URL and saves the request URL
 #              and the response header attribute "Pod-Identifier" into a CSV file.
 #              The script runs in parallel, with each script instance identified by a unique script ID.
 #
-# Usage: ./curl_script.sh <script_id> <num_requests>
+# Usage: ./load-balancing-test.sh <script_id> <num_requests>
 #   - script_id: The identifier number for the script.
 #   - num_requests: The number of requests to be made.
 #
-# Example: ./curl_script.sh 10 100
-#   - This will execute the script with script ID 10 and make 100 requests.
+# Example: ./load-balancing-test.sh 1 100
+#   - This will execute the script with script ID 1 and make 100 requests.
 #
 
 # Check if the CSV file exists, create it if necessary
