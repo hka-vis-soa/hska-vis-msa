@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/mysql"
+    path: "/mnt/data/postgres"
 
 ---
 
@@ -102,7 +102,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/postgres"
+    path: "/mnt/data/mysql"
 
 ---
 
