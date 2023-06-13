@@ -1,54 +1,110 @@
 package com.hska.eshop.categoryservice.controller;
 
-import com.hska.eshop.categoryservice.controller.CategoryController;
 import com.hska.eshop.categoryservice.model.Category;
 import com.hska.eshop.categoryservice.service.CategoryService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@WebMvcTest(controllers = CategoryController.class)
-class CategoryControllerTest {
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-    @Autowired
-    private MockMvc mockMvc;
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNull;
+
+@RunWith(SpringRunner.class)
+public class CategoryControllerTest {
+
+    private CategoryController categoryController;
+
     @MockBean
     private CategoryService categoryService;
-    private Category category;
 
-    /*@BeforeEach
-    void setUp() {
-        user = new User();
-        user.setId(1L);
-        user.setFirstName("Max");
-        user.setLastName("Testermann");
-        user.setEmail("max@testermann.de");
-        user.setMatriculationNumber("123456");
-        user.setUniversity("Hochschule Reutlingen");
+    private Category category1;
+    private Category category2;
+    private List<Category> categories;
+
+    @Before
+    public void setup() throws UnknownHostException {
+        categoryController = new CategoryController(categoryService); // Instantiate the CategoryController
+        category1 = new Category("Category 1");
+        category2 = new Category("Category 2");
+        categories = Arrays.asList(category1, category2);
     }
 
     @Test
-    void canCreateCategory() throws Exception {
-        Mockito.when(userService.save(user)).thenReturn(user);
-        mockMvc.perform(post("/v1/users/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk());
-    }*/
+    public void testGetAllCategories_Success() {
+        Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
-    @Test
-    public void testGetEmptyCategories() throws Exception {
-        mockMvc.perform(get("/v1/categories")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
+        ResponseEntity<List<Category>> response = categoryController.getAllCategories();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(categories, response.getBody());
     }
 
+    @Test
+    public void testGetCategoryById_ExistingId_Success() {
+        Long categoryId = 1L;
+        Mockito.when(categoryService.getCategoryById(categoryId)).thenReturn(Optional.of(category1));
+
+        ResponseEntity<Category> response = categoryController.getCategoryById(categoryId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(category1, response.getBody());
+    }
+
+    @Test
+    public void testGetCategoryById_NonExistingId_NotFound() {
+        Long categoryId = 3L;
+        Mockito.when(categoryService.getCategoryById(categoryId)).thenReturn(Optional.empty());
+
+        ResponseEntity<Category> response = categoryController.getCategoryById(categoryId);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    public void testCreateCategory_Success() {
+        Category newCategory = new Category("New Category");
+        Mockito.when(categoryService.createCategory(Mockito.any(Category.class))).thenReturn(Optional.of(newCategory));
+
+        ResponseEntity<Category> response = categoryController.createCategory(newCategory);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(newCategory, response.getBody());
+    }
+
+
+    @Test
+    public void testDeleteCategoryById_ExistingId_Success() {
+        Long categoryId = 1L;
+        Mockito.when(categoryService.deleteCategoryById(categoryId)).thenReturn(Optional.of(categoryId));
+        Mockito.when(categoryService.getAllCategories()).thenReturn(Collections.singletonList(category2));
+
+        ResponseEntity<List<Category>> response = categoryController.deleteCategoryById(categoryId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Collections.singletonList(category2), response.getBody());
+    }
+
+    @Test
+    public void testDeleteCategoryById_NonExistingId_Conflict() {
+        Long categoryId = 3L;
+        Mockito.when(categoryService.deleteCategoryById(categoryId)).thenReturn(Optional.empty());
+        Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
+
+        ResponseEntity<List<Category>> response = categoryController.deleteCategoryById(categoryId);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals(categories, response.getBody());
+    }
 }
