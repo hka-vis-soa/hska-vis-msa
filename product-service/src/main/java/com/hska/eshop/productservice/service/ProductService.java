@@ -37,7 +37,7 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> getProductsForSearchValues(String description, Double minPrice, Double maxPrice) {
-        return productRepository.findProductsForSearchValues(description, minPrice, maxPrice);
+    public List<Product> getProductsForSearchValues(String details, Double minPrice, Double maxPrice) {
+        return productRepository.findProductsForSearchValues(details, minPrice, maxPrice);
     }
 }

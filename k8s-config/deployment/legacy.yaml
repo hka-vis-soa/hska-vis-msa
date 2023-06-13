@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: legacywebshop
-          image: mavogel/hska-vis-legacywebshop:latest
+          image: dnszlr/hska-vis-legacywebshop:latest
           ports:
             - containerPort: 8080
 
@@ -34,6 +34,8 @@ spec:
     metadata:
       labels:
         app: phpmyadmin
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
         - name: phpmyadmin

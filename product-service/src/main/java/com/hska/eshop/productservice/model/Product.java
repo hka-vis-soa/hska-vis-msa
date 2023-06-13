@@ -13,8 +13,9 @@ public class Product {
     private String name;
     @Column(name = "price", nullable = false)
     private Double price;
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "details", nullable = false)
+    private String details;
+
     @Column(name = "category_id", nullable = false)
     private Long category_id;
 
@@ -23,10 +24,10 @@ public class Product {
      */
     public Product() {}
 
-    public Product(String name, Double price, String description, Long category_id) {
+    public Product(String name, Double price, String details, Long category_id) {
         this.name = name;
         this.price = price;
-        this.description = description;
+        this.details = details;
         this.category_id = category_id;
     }
 
@@ -54,12 +55,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDetails() {
+        return details;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public Long getCategory_id() {

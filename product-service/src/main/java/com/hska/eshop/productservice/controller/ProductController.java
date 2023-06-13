@@ -54,12 +54,12 @@ public class ProductController {
 
     @GetMapping(path = "/search")
     public ResponseEntity<List<Product>> getProductsForSearchValues(
-            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "details", required = false) String details,
             @RequestParam(value = "minPrice", required = false) Double minPrice,
             @RequestParam(value = "maxPrice", required = false) Double maxPrice)
     {
-        logger.info("Received getProductsForSearchValues request with description: " + description + " minPrice " + minPrice + " maxPrice " + maxPrice);
-        return new ResponseEntity<>(productService.getProductsForSearchValues(description, minPrice, maxPrice), headers, HttpStatus.OK);
+        logger.info("Received getProductsForSearchValues request with details: " + details + " minPrice " + minPrice + " maxPrice " + maxPrice);
+        return new ResponseEntity<>(productService.getProductsForSearchValues(details, minPrice, maxPrice), headers, HttpStatus.OK);
     }
 
     @GetMapping(path = "/category/{id}")
@@ -83,6 +83,4 @@ public class ProductController {
                 .map(delId -> new ResponseEntity<>(products, headers, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(products, HttpStatus.CONFLICT));
     }
-
-
 }

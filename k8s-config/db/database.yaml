@@ -136,7 +136,7 @@ spec:
         app: web-shop-db-image
     spec:
       containers:
-        - image: mavogel/hska-vis-web-shop-db-image:latest
+        - image: dnszlr/hska-vis-web-shop-db-image:latest
           name: web-shop-db-image
           env:
             - name: MYSQL_ROOT_PASSWORD

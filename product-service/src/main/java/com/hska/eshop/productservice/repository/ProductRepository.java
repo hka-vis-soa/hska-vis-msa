@@ -17,8 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Long deleteProductById(Long id);
 
     @Query("SELECT p FROM Product p " +
-            "WHERE (:description IS NULL OR p.description LIKE :description%) " +
+            "WHERE (:description IS NULL OR p.details LIKE :details%) " +
             "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
             "AND (:maxPrice IS NULL OR p.price <= :maxPrice)")
-    List<Product> findProductsForSearchValues(String description, Double minPrice, Double maxPrice);
+    List<Product> findProductsForSearchValues(String details, Double minPrice, Double maxPrice);
 }

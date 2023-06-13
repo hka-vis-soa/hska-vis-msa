@@ -1,24 +1,14 @@
 package com.hska.eshop.categoryservice.model;
 
-import com.hska.eshop.categoryservice.controller.CategoryController;
 import jakarta.persistence.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Objects;
 
 @Entity
 @Table(name = "categories", schema="categoryservice")
 public class Category {
 
-	private final Logger logger = LoggerFactory.getLogger(Category.class);
-
 	private Long id;
 	private String name;
-	@Transient
-	private InetAddress address;
 
 	/**
 	 * Don't delete hibernate empty constructor
