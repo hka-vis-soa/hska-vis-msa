@@ -17,6 +17,9 @@ spec:
           image: dnszlr/hska-vis-legacywebshop:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: PROXY_URL
+              value: http://apache:80
 
 ---
 

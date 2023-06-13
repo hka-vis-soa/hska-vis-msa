@@ -44,7 +44,7 @@ kind: Deployment
 metadata:
   name: category-service
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: category-service
@@ -73,7 +73,7 @@ kind: Deployment
 metadata:
   name: product-service
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: product-service
