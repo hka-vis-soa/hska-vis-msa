@@ -44,11 +44,6 @@ services:
       - "8001:8080"
     depends_on:
       - postgres
-  #apache-proxy
-  apache:
-    build: ./apache-proxy
-    ports:
-      - "8080:80"
 
 volumes:
   postgres: {}
