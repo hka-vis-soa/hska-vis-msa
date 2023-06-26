@@ -52,6 +52,12 @@ public class CategoryController {
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
+	@GetMapping(path = "/{id}/verify")
+	public boolean doesCategoryExist(@PathVariable Long id) {
+		logger.info("Received doesCategoryExist request with id: " + id);
+		return categoryService.getCategoryById(id).isPresent();
+	}
+
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<List<Category>> deleteCategoryById(@PathVariable Long id) {
 		logger.info("Received deleteCategoryById request with id: " + id);

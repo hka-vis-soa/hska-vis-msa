@@ -91,6 +91,8 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
+            - name: CATEGORY_SERVICE_URL
+              value: http://category-service:8080
 status: {}
 
 ---
